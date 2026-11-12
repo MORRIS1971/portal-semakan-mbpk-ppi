@@ -1,0 +1,936 @@
+﻿<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PORTAL SEMAKAN PENYERTAAN MBPK KE PPI</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .badge-done { background-color: #DEF7EC; color: #03543F; border: 1px solid #31C48D; }
+    .badge-pending { background-color: #FDF2F2; color: #9B1C1C; border: 1px solid #F98080; }
+    .badge-inactive { background-color: #F3F4F6; color: #4B5563; border: 1px solid #D1D5DB; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased p-3 sm:p-5 min-h-screen">
+
+  <div class="max-w-6xl mx-auto space-y-4">
+    
+    <!-- Header Card -->
+    <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-700/50">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 bg-blue-600/90 rounded-xl flex items-center justify-center shadow-inner text-amber-300 flex-shrink-0">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold uppercase tracking-wider bg-blue-800 text-blue-200 px-2 py-0.5 rounded">Portal Rasmi Semakan</span>
+              <span class="text-xs font-medium text-amber-300 bg-amber-950/70 px-2 py-0.5 rounded border border-amber-600/40">Fasa Pengisian Sekolah</span>
+            </div>
+            <h1 class="text-base sm:text-xl font-extrabold tracking-tight mt-0.5">PORTAL SEMAKAN PENYERTAAN MBPK KE PPI</h1>
+            <p class="text-xs text-blue-200">Sistem Pengemaskinian Justifikasi, Perancangan Intervensi & Status Murid</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
+          <button onclick="openSeparaModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-600 transition shadow-sm">
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+            <span>Arkib Separa (<span id="separaBadgeCount">68</span>)</span>
+          </button>
+          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow-sm transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>Eksport CSV Terkini</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 KAD UTAMA (SEGERAK DENGAN SEKOLAH DIPILIH - KEPERLUAN AUDIT 2) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <!-- Kad 1: Jumlah MBPK Disemak -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">MBPK Disemak</p>
+          <p class="text-2xl font-black text-slate-900 mt-0.5" id="statTotal">53</p>
+          <span class="text-xs text-blue-600 font-medium" id="statTotalSubtitle">Semua Sekolah</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Kad 2: Ada Justifikasi -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ada Justifikasi</p>
+          <p class="text-2xl font-black text-emerald-600 mt-0.5" id="statCompleted">26</p>
+          <span class="text-xs text-emerald-600 font-semibold" id="statCompletedPct">49% Selesai</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Kad 3: Belum Ada Justifikasi -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Belum Ada Justifikasi</p>
+          <p class="text-2xl font-black text-rose-600 mt-0.5" id="statPending">27</p>
+          <span class="text-xs text-rose-500 font-semibold" id="statPendingSubtitle">Tindakan Guru</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Kad 4: Murid Separa -->
+      <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Murid Inklusif Separa</p>
+          <p class="text-2xl font-black text-indigo-600 mt-0.5" id="statSepara">68</p>
+          <span class="text-xs text-indigo-600 font-medium" id="statSeparaSubtitle">Sedia Ada PPI</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Controls -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3.5">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3.5">
+        
+        <!-- School Selector Dropdown -->
+        <div class="flex-1 max-w-xl">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
+            <span class="text-blue-600 font-extrabold">&#9679;</span> PILIH SEKOLAH UNTUK SEMAKAN:
+          </label>
+          <div class="relative">
+            <select id="schoolSelect" onchange="onSchoolChange()" class="w-full bg-blue-50/50 border-2 border-blue-400 text-slate-900 text-xs sm:text-sm font-bold rounded-xl focus:ring-2 focus:ring-blue-600 p-2.5 pr-8 cursor-pointer shadow-sm">
+              <option value="ALL">-- SEMUA SEKOLAH (53 Murid) --</option>
+              <option value="YBB3311">SK NANGA NGUNGUN (YBB3311) &bull; 3 Murid</option>
+              <option value="YBB3323">SK NANGA PEDAI (YBB3323) &bull; 7 Murid</option>
+              <option value="YCB3301">SK ST FRANCIS XAVIER (YCB3301) &bull; 16 Murid</option>
+              <option value="YBB3320">SK ULU RANAN (YBB3320) &bull; 20 Murid</option>
+              <option value="YEB3301">SMK DATUK HAJI ABDUL RAHMAN YAKUB (YEB3301) &bull; 1 Murid</option>
+              <option value="YEA3302">SMK KANOWIT (YEA3302) &bull; 6 Murid</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Status Filter Buttons (Segerak mengikut sekolah) -->
+        <div class="flex items-center gap-1.5 self-start md:self-end">
+          <div class="inline-flex rounded-xl border border-slate-200 p-1 bg-slate-100 text-xs">
+            <button onclick="setStatusFilter('ALL')" id="filterBtnAll" class="px-3 py-1.5 font-bold rounded-lg bg-white text-slate-800 shadow-sm transition">Semua (<span id="countFilterAll">53</span>)</button>
+            <button onclick="setStatusFilter('PENDING')" id="filterBtnPending" class="px-3 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">Belum Diisi (<span id="countFilterPending">27</span>)</button>
+            <button onclick="setStatusFilter('DONE')" id="filterBtnDone" class="px-3 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">Selesai (<span id="countFilterDone">26</span>)</button>
+            <button onclick="setStatusFilter('PINDAH')" id="filterBtnPindah" class="px-3 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition">Berpindah/Berhenti (<span id="countFilterPindah">0</span>)</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Search & Progress Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
+        <div class="w-full sm:w-80">
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari Nama MBPK atau No. OKU..." class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+        </div>
+
+        <!-- School Progress -->
+        <div class="w-full sm:w-80 flex items-center gap-3">
+          <div class="flex-1">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="font-semibold text-slate-600" id="progressTitleLabel">Peratus Kesiapan Sekolah</span>
+              <span class="font-bold text-blue-700" id="progressPctText">49% (26/53)</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+              <div id="progressBar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 49%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Table of Students -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-4 sm:px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/75">
+        <div class="flex items-center gap-2">
+          <h2 class="font-bold text-slate-800 text-xs uppercase tracking-wider">Senarai MBPK Yang Perlu Disemak</h2>
+          <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2.5 py-0.5 rounded-md" id="activeSchoolBadge">Semua Sekolah</span>
+        </div>
+        <span class="text-xs text-slate-500 font-medium" id="showingCount">Memaparkan 53 rekod</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs min-w-[700px]">
+          <thead class="bg-slate-100 text-slate-600 uppercase font-bold tracking-wider border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-3 text-center w-12">BIL</th>
+              <th class="py-3 px-4">MAKLUMAT MBPK</th>
+              <th class="py-3 px-3">SEKOLAH</th>
+              <th class="py-3 px-3">KETIDAKUPAYAAN & KELAS</th>
+              <th class="py-3 px-3">JUSTIFIKASI TIDAK DIINKLUSIFKAN</th>
+              <th class="py-3 px-3">PERANCANGAN INTERVENSI</th>
+              <th class="py-3 px-3 text-center w-44">TINDAKAN GURU</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody" class="divide-y divide-slate-100">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden p-8 text-center">
+        <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-blue-500 mb-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="text-xs font-bold text-slate-800" id="emptyTitle">Tiada Rekod Dijumpai</h3>
+        <p class="text-xs text-slate-500 mt-0.5" id="emptyDesc">Tiada murid dalam kategori tapisan ini.</p>
+        <button onclick="setStatusFilter('ALL')" id="emptyResetBtn" class="mt-3 px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm transition">
+          Lihat Semua Murid Sekolah Ini
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between text-xs text-slate-500 px-2 py-1">
+      <span>Portal Semakan MBPK ke PPI &bull; Kod Standard Terbuka (HTML/JS)</span>
+      <button onclick="resetDataToDefault()" class="text-slate-400 hover:text-rose-600 underline text-xs">
+        Muat Semula Data Asal (Reset)
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Modal Edit / Kemaskini Justifikasi & Status Murid PPKI -->
+  <div id="editModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white px-5 py-3.5 flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold">Kemas Kini Rekod MBPK</h3>
+          <p class="text-xs text-blue-200">Justifikasi, Intervensi, & Status Murid (Berpindah/Berhenti/Padam)</p>
+        </div>
+        <button onclick="closeModal()" class="text-slate-300 hover:text-white text-xl font-bold leading-none">&times;</button>
+      </div>
+
+      <form id="editForm" onsubmit="saveStudent(event)" class="p-5 space-y-3.5 text-xs">
+        <input type="hidden" id="editBil">
+
+        <!-- Info Card -->
+        <div class="bg-blue-50/70 rounded-xl p-3 border border-blue-100 flex flex-col gap-1">
+          <div class="flex items-center justify-between">
+            <span class="font-extrabold text-blue-950 text-sm" id="modalNama">-</span>
+            <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-200 text-blue-900" id="modalNoOku">-</span>
+          </div>
+          <div class="flex items-center gap-3 text-slate-600 text-xs mt-1">
+            <span>Sekolah: <strong id="modalSekolah">-</strong></span>
+            <span>Umur: <strong id="modalUmur">-</strong> thn (<span id="modalJantina">-</span>)</span>
+          </div>
+        </div>
+
+        <!-- Status Murid (Audit Point 3) -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">
+            STATUS PERSEKOLAHAN MURID <span class="text-rose-500">*</span>
+          </label>
+          <select id="modalStatusMurid" onchange="onStatusMuridChange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:bg-white">
+            <option value="AKTIF">1. AKTIF BERSEKOLAH (Perlu Semakan Justifikasi)</option>
+            <option value="BERPINDAH SEKOLAH">2. TELAH BERPINDAH SEKOLAH LAIN</option>
+            <option value="BERHENTI / TIDAK BERSEKOLAH">3. BERHENTI / TIDAK LAGI BERSEKOLAH</option>
+            <option value="TAMAT PERSEKOLAHAN">4. TAMAT PERSEKOLAHAN / LAIN-LAIN</option>
+          </select>
+        </div>
+
+        <!-- Justifikasi Dropdown -->
+        <div id="justifikasiContainer">
+          <label class="block font-bold text-slate-700 mb-1">
+            JUSTIFIKASI UTAMA TIDAK DIINKLUSIFKAN <span class="text-rose-500">*</span>
+          </label>
+          <select id="modalJustifikasi" onchange="onJustifikasiChange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:bg-white">
+            <option value="">-- Pilih Justifikasi --</option>
+            <option value="UMUR BELUM MELAYAKKAN">1. UMUR BELUM MELAYAKKAN</option>
+            <option value="TANTRUM/EMOSI/DISPLIN">2. TANTRUM / EMOSI / DISIPLIN</option>
+            <option value="KETIDAKUPAYAAN FIZIKAL">3. KETIDAKUPAYAAN FIZIKAL</option>
+            <option value="PENGURUSAN DIRI BELUM DIKUASAI">4. PENGURUSAN DIRI BELUM DIKUASAI (TOILET/KEBERSIHAN)</option>
+            <option value="TAHAP KOGNITIF/3M BELUM BERSEDIA">5. TAHAP KOGNITIF / 3M BELUM BERSEDIA</option>
+            <option value="GANGGUAN SENSORI / HIPERAKTIF">6. GANGGUAN SENSORI / HIPERAKTIF TINGGI</option>
+            <option value="KOMUNIKASI & PERTUTURAN TERHAD">7. MASALAH KOMUNIKASI & PERTUTURAN TERHAD</option>
+            <option value="LAIN-LAIN SEBAB">8. LAIN-LAIN SEBAB (SILA NYATAKAN)</option>
+          </select>
+        </div>
+
+        <!-- Perancangan Intervensi -->
+        <div id="intervensiContainer">
+          <label class="block font-bold text-slate-700 mb-1">
+            PERANCANGAN INTERVENSI SEKOLAH <span class="text-rose-500">*</span>
+          </label>
+          <select id="modalIntervensiSelect" onchange="onIntervensiPresetChange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-medium mb-1.5 focus:ring-2 focus:ring-blue-500">
+            <option value="">-- Pilihan Intervensi Pantas --</option>
+            <option value="RPI2.0">RPI 2.0 (Rancangan Pendidikan Individu)</option>
+            <option value="RPI2.0 & INTERVENSI TINGKAH LAKU">RPI 2.0 & Intervensi Tingkah Laku</option>
+            <option value="LATIHAN PENGURUSAN DIRI & SENSORI">Latihan Pengurusan Diri & Terapi Sensori</option>
+            <option value="PROGRAM TRANSISI & BIMBINGAN 3M">Program Transisi & Pemulihan 3M</option>
+            <option value="PENYERTAAN INKLUSIF KO-KURIKULUM">Penyertaan Inklusif Kokurikulum Sahaja</option>
+          </select>
+          <input type="text" id="modalIntervensi" placeholder="Contoh: RPI 2.0, Terapi Pertuturan..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:bg-white">
+        </div>
+
+        <!-- Catatan Tambahan -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">CATATAN TAMBAHAN (PILIHAN):</label>
+          <textarea id="modalCatatan" rows="2" placeholder="Catatan guru, tarikh pindah, atau sekolah baharu..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs focus:ring-2 focus:ring-blue-500 focus:bg-white"></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <button type="button" onclick="deleteCurrentStudent()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white font-bold rounded-xl border border-rose-200 transition">
+            Padam Rekod Ini
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
+              Batal
+            </button>
+            <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition">
+              Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Arkib Separa (Audit Point 2: Edit & Padam Rekod) -->
+  <div id="separaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[85vh] shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold">Arkib MBPK Inklusif Separa (<span id="separaModalCount">68</span> Murid)</h3>
+          <p class="text-xs text-slate-300">Rekod rujukan PPI Separa &bull; Boleh dikemas kini atau dipadam jika murid berpindah</p>
+        </div>
+        <button onclick="closeSeparaModal()" class="text-slate-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+      </div>
+
+      <div class="p-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between gap-4">
+        <input type="text" id="separaSearch" oninput="renderSeparaTable()" placeholder="Cari dalam arkib separa..." class="bg-white border border-slate-200 text-xs rounded-xl px-3 py-1.5 w-64 outline-none">
+        <span class="text-xs text-slate-500 font-medium">Fungsi: Guru boleh kemaskini status atau padam rekod murid berpindah</span>
+      </div>
+
+      <div class="overflow-y-auto p-4 flex-1">
+        <table class="w-full text-left text-xs min-w-[650px]">
+          <thead class="bg-slate-100 text-slate-600 uppercase font-bold sticky top-0">
+            <tr>
+              <th class="py-2.5 px-3">BIL</th>
+              <th class="py-2.5 px-3">NAMA MBPK</th>
+              <th class="py-2.5 px-3">NO. OKU</th>
+              <th class="py-2.5 px-3">SEKOLAH</th>
+              <th class="py-2.5 px-3">STATUS/CATATAN</th>
+              <th class="py-2.5 px-3 text-center w-28">TINDAKAN</th>
+            </tr>
+          </thead>
+          <tbody id="separaTableBody" class="divide-y divide-slate-100">
+            <!-- Dynamic -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-5 py-2.5 bg-slate-50 border-t border-slate-200 flex justify-end">
+        <button onclick="closeSeparaModal()" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-lg">Tutup Arkib</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Separa (Audit Point 2) -->
+  <div id="editSeparaModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-slate-800 text-white px-5 py-3 flex items-center justify-between">
+        <h3 class="text-xs font-bold uppercase">Kemas Kini Status Murid Separa</h3>
+        <button onclick="closeEditSeparaModal()" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+      </div>
+      <form id="editSeparaForm" onsubmit="saveSeparaStudent(event)" class="p-5 space-y-3 text-xs">
+        <input type="hidden" id="editSeparaBil">
+        <div class="bg-slate-100 p-2.5 rounded-lg">
+          <div class="font-bold text-slate-900" id="modalSeparaNama">-</div>
+          <div class="text-xs font-mono text-blue-700" id="modalSeparaNoOku">-</div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">STATUS PERSEKOLAHAN:</label>
+          <select id="modalSeparaStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+            <option value="SEPARA">INKLUSIF SEPARA (AKTIF)</option>
+            <option value="BERPINDAH SEKOLAH">TELAH BERPINDAH SEKOLAH</option>
+            <option value="BERHENTI / TIDAK BERSEKOLAH">BERHENTI / TIDAK BERSEKOLAH</option>
+            <option value="TAMAT PERSEKOLAHAN">TAMAT PERSEKOLAHAN</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">CATATAN:</label>
+          <input type="text" id="modalSeparaCatatan" placeholder="Catatan guru..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
+        </div>
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <button type="button" onclick="deleteSeparaStudent()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white font-bold rounded-lg border border-rose-200 transition">
+            Padam Rekod Ini
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeEditSeparaModal()" class="px-3 py-1.5 bg-slate-100 text-slate-700 font-semibold rounded-lg">Batal</button>
+            <button type="submit" class="px-4 py-1.5 bg-blue-600 text-white font-bold rounded-lg shadow">Simpan</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <span class="text-emerald-400 font-bold">&#10003;</span>
+    <span id="toastMsg">Maklumat berjaya dikemas kini!</span>
+  </div>
+
+  <script>
+    // Master data (Raw Embedded)
+    const MASTER_PPKI_DATA = [{"BIL":"1","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"PHILIP ADEEN ANAK DOMINIC MAUNG","NO_OKU":"LD080124000165","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"2","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"ADEEN KONG YONG CHENG","NO_OKU":"LD131523000013","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"4","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"ADRILIA UMON ANAK SIKA","NO_OKU":"LD131526000013","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"11","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"BRAYIEND EMMANUEL ANAK ELIZABETH ALANA","NO_OKU":"LD131520000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"11","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"14","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"EMMA JELITA ANAK LAMAH","NO_OKU":"LD131523000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"12","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"16","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"ALFRET WILLIE MATAHARI ANAK ALVIN","NO_OKU":"LD130325000064","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"17","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"ESTHER ELORA JEFFREY","NO_OKU":"LD131523000005","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"18","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"RAFFAEL JAYDEN ANAK RONNY","NO_OKU":"LD130223000038","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2019-02-23","PERANCANGAN_INTERVENSI":""},{"BIL":"19","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"JELVIS JAWI ANAK JELIAN","NO_OKU":"LD131521000005","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"20","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"SHARIF NAAIL BIN SAFUAN","NO_OKU":"PH130320000085","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"KETIDAKUPAYAAN FIZIKAL","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"23","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"ALEXZANDER CHUA ANAK GANI","NO_OKU":"LD131522000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"24","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JAYRED AJANG JIMPAU","NO_OKU":"LD131526000003","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"12","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"26","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"VALENTINO CHEN BIN DIANA","NO_OKU":"LD131524000009","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"28","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"ADRIAN FIDELIS ANAK TERRY BILLY","NO_OKU":"LD130320000086","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"29","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"AMMAR AL HADID BIN MOHD AMIRUL","NO_OKU":"LD131525000020","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"31","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JAYDEN AJAN JIMPAU","NO_OKU":"LD131526000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"12","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"32","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"IXANDER TIMOTHY ANAK THOMAS","NO_OKU":"LD131521000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"33","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"NICODEMUS AYDEN ANAK SMITH","NO_OKU":"LD131526000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"34","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JASON AUSTIN LIM WEI JIA","NO_OKU":"LD131523000004","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"35","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"EZEKIEL DARIUS ANAK DESMITH DAWEH","NO_OKU":"LD131523000022","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"36","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JESSICA LIM ANAK JOHNNY","NO_OKU":"LD130320000157","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"12","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"41","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"GEVARIEL NOEL ANAK JOHN","NO_OKU":"LD131526000004","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"42","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"TRISYA LAVIGNE ANAK TEEDY LIANG","NO_OKU":"LD130319000254","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"11","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"43","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"DIANNE ANGEL ANAK DANIEL","NO_OKU":"LD131525000004","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"44","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JEHOVAH JOEL ANAK JACOB","NO_OKU":"LD130325000176","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"45","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"CAYDEN MELDRICK ANAK THOMAS","NO_OKU":"LD131521000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"47","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ELIJAH ERENE ANAK ROBIN","NO_OKU":"LD131524000042","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"49","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"CONNIE CHIA ICHING ANAK ISA","NO_OKU":"LD131524000044","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"10","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"LAIN-LAIN SEBAB","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"50","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"VAZTERN GARETH HAYDEN ANAK HEBREW SIGAN","NO_OKU":"LD130322000009","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"52","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"LAUREN JUSTINE ANAK BEJAMIN","NO_OKU":"LD130325000137","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"54","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ALDRICH OLIVER DATTO ANAK SULUK","NO_OKU":"LD131523000018","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"6","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"INTEGRASI","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"56","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"MOHAMMAD ARYAN AZIZI BIN KAMIJIE","NO_OKU":"LD131525000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"6","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"INTEGRASI","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"58","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"JAYDEN JETI ANAK ENTALAI","NO_OKU":"BL131524000001","KATEGORI_KETIDAKUPAYAAN":"PENGLIHATAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"59","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"WILSON WELL ANAK NORA","NO_OKU":"LD131524000043","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"LAIN-LAIN SEBAB","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"60","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"CLAUDIUS FELLIUS ANAK DUAT","NO_OKU":"LD131526000008","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"62","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"JONES BRANDON ANAK BEDIN","NO_OKU":"PH131523000006","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"UMUR BELUM MELAYAKKAN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"64","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"MACHAELL ANAK ROSLINA","NO_OKU":"LD131524000023","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"LAIN-LAIN SEBAB","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"65","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"CHARLES KELVIN ANAK LEONARD","NO_OKU":"LD131525000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"6","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"INTEGRASI","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"66","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ALFESIUS ANAK AZWAN","NO_OKU":"LD131525000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"8","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"69","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ARLTON RYAN ANAK HENRY","NO_OKU":"LD131526000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"5","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"INTEGRASI","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"73","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"EVENEZER BUSAH ANAK EDWARD SANDOM","NO_OKU":"PH131525000003","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"5","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"INTEGRASI","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"74","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"OLIVIA RIVERA ANAK RICHARD STANLEY","NO_OKU":"LD131516000024","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"11","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"75","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"YOVIELA JACLENY ANAK JACKSON MIKE","NO_OKU":"LD130322000146","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"76","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"BRIAN JUKIEY ANAK DAVID","NO_OKU":"LD131522000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"79","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"KINGSLEY TEH MING LONG","NO_OKU":"LD131524000013","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"80","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ANDYRYAN UTAP","NO_OKU":"LD131524000047","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"7","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"81","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"ANGELINA PUNAI ANAK KAYAN","NO_OKU":"LD131524000035","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":"PENYERTAAN INKLUSIF KO-KURIKULUM"},{"BIL":"91","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"DESMOND AZIZ ANAK JUANA","NO_OKU":"LD131517000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"105","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"EVEYIANA AVRINDA ANAK LEBAT","NO_OKU":"LD132014000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"18","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"106","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"GABRELL JAYAN ANAK ROSE","NO_OKU":"LD131516000005","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"109","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"BRENDRA MIEAH ANAK DONNY","NO_OKU":"LD130317000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"16","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"TANTRUM/EMOSI/DISPLIN","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"111","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"CORNIELIOS ANAK ELINA","NO_OKU":"PH130318000019","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"17","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"KETIDAKUPAYAAN FIZIKAL","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"},{"BIL":"121","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"ADRYAN ASHLEY ANAK AUGUSTINE","NO_OKU":"LD131522000014","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"PROGRAM PENDIDIKAN KHAS INTEGRASI","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"LAIN-LAIN SEBAB","CATATAN":"","PERANCANGAN_INTERVENSI":"RPI2.0"}];
+    const MASTER_SEPARA_DATA = [{"BIL":"3","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"FREDDO NIRA ANAK SUMIE","NO_OKU":"LD131524000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"12","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2014-11-20","PERANCANGAN_INTERVENSI":""},{"BIL":"5","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"ALIB JAWI ANAK SUZIE","NO_OKU":"LD130323000206","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"11","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2015-12-26","PERANCANGAN_INTERVENSI":""},{"BIL":"6","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"LUCAS MARCELLO ANAK LOUIS","NO_OKU":"LD131520000008","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-12-30","PERANCANGAN_INTERVENSI":""},{"BIL":"7","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"PETRUS ALAM ANAK NYALONG","NO_OKU":"LD131515000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-01-15","PERANCANGAN_INTERVENSI":""},{"BIL":"8","KOD_SEKOLAH":"YBB3311","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA NGUNGUN","NAMA_MBPK":"NICHOLAS MANUEL ANAK JALI","NO_OKU":"LD131522000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"11","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2015-09-11","PERANCANGAN_INTERVENSI":""},{"BIL":"9","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"KRISHNA LIMAN ANAK MERRYLYNE CHRISTY","NO_OKU":"LD131523000006","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2016-04-23","PERANCANGAN_INTERVENSI":""},{"BIL":"10","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"AMBROSE JEROME ANAK LANGGIE","NO_OKU":"LD131526000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"D4 | T.Lahir: 2016-08-07","PERANCANGAN_INTERVENSI":""},{"BIL":"12","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"MARCELLUS GALANG ANAK RUSH","NO_OKU":"PH131516000007","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-04-11","PERANCANGAN_INTERVENSI":""},{"BIL":"13","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"JADETHOYSON LEONZ ANAK JEFFERY","NO_OKU":"LD131522000005","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"11","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2015-06-07","PERANCANGAN_INTERVENSI":""},{"BIL":"15","KOD_SEKOLAH":"YBB3323","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN NANGA PEDAI","NAMA_MBPK":"RYZEN CRANIE ANAK GARRY","NO_OKU":"LD131524000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2016-02-05","PERANCANGAN_INTERVENSI":""},{"BIL":"21","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"MATTEUS AMBROSE ANAK MINA","NO_OKU":"LD131523000025","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2016-01-13","PERANCANGAN_INTERVENSI":""},{"BIL":"22","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"STEFFIEYNA EUNICE ANAK HOLY JUDE","NO_OKU":"LD131523000012","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2016-07-10","PERANCANGAN_INTERVENSI":""},{"BIL":"25","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"CHARLIE JOHN ABRAHAM ANAK JEFFERY ANGKAM","NO_OKU":"LD131523000019","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2016-11-11","PERANCANGAN_INTERVENSI":""},{"BIL":"27","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"JACKSON ANAK KAMBUT","NO_OKU":"LD131523000027","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"12","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2014-09-04","PERANCANGAN_INTERVENSI":""},{"BIL":"30","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"MEXSON CASSY ANAK LAWRENCE","NO_OKU":"LD131524000032","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2012-09-28","PERANCANGAN_INTERVENSI":""},{"BIL":"37","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"ROBIN SUNG WEI JIE","NO_OKU":"LD131519000021","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2012-05-29","PERANCANGAN_INTERVENSI":""},{"BIL":"38","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"ALEXANDER ALVIN GUNO ANAK AMIN","NO_OKU":"LD131524000034","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-11-09","PERANCANGAN_INTERVENSI":""},{"BIL":"39","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"TEVEZ ANAK SUDIN","NO_OKU":"LD131524000033","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-09-30","PERANCANGAN_INTERVENSI":""},{"BIL":"40","KOD_SEKOLAH":"YCB3301","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ST FRANCIS XAVIER","NAMA_MBPK":"WILSON KILAT ANAK LILY","NO_OKU":"MD130415000048","KATEGORI_KETIDAKUPAYAAN":"PELBAGAI","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2012-07-05","PERANCANGAN_INTERVENSI":""},{"BIL":"46","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"ALEXIUS USIT ANAK UTAU","NO_OKU":"LD131523000017","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-08-20","PERANCANGAN_INTERVENSI":""},{"BIL":"48","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAANULU RANAN","NAMA_MBPK":"SONIEYA HAWA BINTI ABDULLAH","NO_OKU":"LD130322000063","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-08-06","PERANCANGAN_INTERVENSI":""},{"BIL":"51","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"FELECIA ANAK DANA","NO_OKU":"LD131524000003","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"12","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2014-06-26","PERANCANGAN_INTERVENSI":""},{"BIL":"53","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"PHELOMENNA CHANDA ANAK GRAMONG","NO_OKU":"LD131523000011","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-12-03","PERANCANGAN_INTERVENSI":""},{"BIL":"55","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"VENISIA LALANG ANAK TIHAU","NO_OKU":"LD131524000037","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-04-03","PERANCANGAN_INTERVENSI":""},{"BIL":"57","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"LIONG YU SENG","NO_OKU":"LD131523000031","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2012-07-17","PERANCANGAN_INTERVENSI":""},{"BIL":"61","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"SOPHIA ANAK LANGIT","NO_OKU":"LD131524000031","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-02-08","PERANCANGAN_INTERVENSI":""},{"BIL":"63","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"NICHOLAS LIONG","NO_OKU":"LD131523000029","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-08-09","PERANCANGAN_INTERVENSI":""},{"BIL":"67","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"TERENCE TUGANG LEEKONG ANAK KEVIN","NO_OKU":"LD131523000014","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"12","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2014-02-23","PERANCANGAN_INTERVENSI":""},{"BIL":"68","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"KASIYATINA ANAK UMBAN","NO_OKU":"LD131523000030","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-05-27","PERANCANGAN_INTERVENSI":""},{"BIL":"70","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"JOE FIELDI INGANG ANAK RUNDI","NO_OKU":"LD131523000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-12-28","PERANCANGAN_INTERVENSI":""},{"BIL":"71","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"PENDARELA ANAK RICKY","NO_OKU":"LD131523000010","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAS | T.Lahir: 2013-06-17","PERANCANGAN_INTERVENSI":""},{"BIL":"72","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"PHILIP ANAK FRANCIS","NO_OKU":"LD131526000009","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"10","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"77","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"VIVIAN VALENTINO ANAK DIANA","NO_OKU":"LD131526000015","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"9","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"","PERANCANGAN_INTERVENSI":""},{"BIL":"78","KOD_SEKOLAH":"YBB3320","NAMA_SEKOLAH":"SEKOLAH KEBANGSAAN ULU RANAN","NAMA_MBPK":"IAN ONG IBOM ANAK SANI","NO_OKU":"LD131524000036","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"41480","CATATAN":"KHAS","PERANCANGAN_INTERVENSI":""},{"BIL":"82","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"AMELIA NATASYA ANAK DONNY","NO_OKU":"LD132020000003","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2008-11-26","PERANCANGAN_INTERVENSI":""},{"BIL":"83","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"JULISSA MONIEKA ANAK JIM","NO_OKU":"PH131524000014","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"P","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-08-07","PERANCANGAN_INTERVENSI":""},{"BIL":"84","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"ROBERT LAW SIAW FOOK","NO_OKU":"LD131516000022","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-03-10","PERANCANGAN_INTERVENSI":""},{"BIL":"85","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"HALMINTON GARRY LUAT ANAK MOHARI","NO_OKU":"LD131519000034","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-07-16","PERANCANGAN_INTERVENSI":""},{"BIL":"86","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"KAREN ASHLEY CAESAR JACK","NO_OKU":"LD131519000027","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2008-10-04","PERANCANGAN_INTERVENSI":""},{"BIL":"87","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"MALISSA IMAS ANAK MAWAN","NO_OKU":"LD131517000002","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-10-15","PERANCANGAN_INTERVENSI":""},{"BIL":"88","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"MELISA FELILIYA ANAK SEMERAI","NO_OKU":"LD131517000001","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-01-31","PERANCANGAN_INTERVENSI":""},{"BIL":"89","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"KONG DEE HUI","NO_OKU":"LD130318000004","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"17","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2009-08-05","PERANCANGAN_INTERVENSI":""},{"BIL":"90","KOD_SEKOLAH":"YEB3301","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB","NAMA_MBPK":"MONICA LALA ANAK KADI","NO_OKU":"LD131519000012","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2008-11-19","PERANCANGAN_INTERVENSI":""},{"BIL":"92","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"NICHOLAS RICKY ANAK SELIAU","NO_OKU":"LD131519000040","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"39440","CATATAN":"KHAM","PERANCANGAN_INTERVENSI":""},{"BIL":"93","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"MATHAES EINGKAS ANAK AGA","NO_OKU":"LD131519000038","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-11-17","PERANCANGAN_INTERVENSI":""},{"BIL":"94","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"DANIELSON ANAK ELLY","NO_OKU":"PH130313000218","KATEGORI_KETIDAKUPAYAAN":"FIZIKAL","JANTINA":"L","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2008-11-27","PERANCANGAN_INTERVENSI":""},{"BIL":"95","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"RISFELIS EMMANUEL ANAK ROBERT ALING","NO_OKU":"LD131519000023","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"16","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2010-08-15","PERANCANGAN_INTERVENSI":""},{"BIL":"96","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"AIVIN DEZTER ANAK SEBASTIAN","NO_OKU":"LD131524000005","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-05-20","PERANCANGAN_INTERVENSI":""},{"BIL":"97","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"MICHEAL JOSH LIBAU ANAK AUGUSTINE","NO_OKU":"LD131524000039","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"13","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2013-10-14","PERANCANGAN_INTERVENSI":""},{"BIL":"98","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"DEXTER INYANG ANAK PAUN","NO_OKU":"LD131523000009","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-08-19","PERANCANGAN_INTERVENSI":""},{"BIL":"99","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"DILLY FAHRIL ANAK JAMY","NO_OKU":"LD131515000008","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-06-01","PERANCANGAN_INTERVENSI":""},{"BIL":"100","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"MAXZIMUS MARCUS ANAK DOMINIC TAWAI","NO_OKU":"LD131516000010","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"16","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2010-12-16","PERANCANGAN_INTERVENSI":""},{"BIL":"101","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"NEKELES RIO ANAK DULING","NO_OKU":"LD131520000013","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-06-07","PERANCANGAN_INTERVENSI":""},{"BIL":"102","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"ENSALI ANAK PANI","NO_OKU":"LD131524000028","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2012-05-12","PERANCANGAN_INTERVENSI":""},{"BIL":"103","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"FLETCHER JAYAN ANAK FRANKLIN SANG","NO_OKU":"LD131524000020","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2012-11-06","PERANCANGAN_INTERVENSI":""},{"BIL":"104","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"PETRICIA ANCHONG","NO_OKU":"LD131519000014","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"16","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2010-09-15","PERANCANGAN_INTERVENSI":""},{"BIL":"107","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"LEMMAIE ANAK JIMMY","NO_OKU":"DE130314000028","KATEGORI_KETIDAKUPAYAAN":"PENDENGARAN","JANTINA":"P","UMUR":"17","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2009-11-03","PERANCANGAN_INTERVENSI":""},{"BIL":"108","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"TIMOTHY ANAK JALI","NO_OKU":"LD131518000003","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"16","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2010-12-07","PERANCANGAN_INTERVENSI":""},{"BIL":"110","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"AUGUSTINE JIMBAU ANAK AWA","NO_OKU":"LD131520000007","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"39637","CATATAN":"KHAM","PERANCANGAN_INTERVENSI":""},{"BIL":"112","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"SLYVESTER TUGAK ANAK UNDI","NO_OKU":"BL131523000002","KATEGORI_KETIDAKUPAYAAN":"PENGLIHATAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2012-11-17","PERANCANGAN_INTERVENSI":""},{"BIL":"113","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"RICKY BOY ANAK JAMBIE","NO_OKU":"LD131520000014","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-01-23","PERANCANGAN_INTERVENSI":""},{"BIL":"114","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"JENNIFER SUDI ANAK TERRY DICKSON","NO_OKU":"LD130313000222","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-11-06","PERANCANGAN_INTERVENSI":""},{"BIL":"115","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"STEPHANIE ANAK JESSICO","NO_OKU":"LD131524000046","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"16","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2010-09-23","PERANCANGAN_INTERVENSI":""},{"BIL":"116","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"ARRON ANAK DONNY","NO_OKU":"LD130320000059","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"18","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2008-03-08","PERANCANGAN_INTERVENSI":""},{"BIL":"117","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"FLORENNA GERITA ANAK LORANCE","NO_OKU":"LD131519000049","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"P","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-09-04","PERANCANGAN_INTERVENSI":""},{"BIL":"118","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"NICHOLAS RIMONG ANAK SLYVESTER","NO_OKU":"LD131524000021","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"14","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2012-06-24","PERANCANGAN_INTERVENSI":""},{"BIL":"119","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"SHAMIZAL AMIRA GUNUNG ANAK DURIN","NO_OKU":"LD131518000004","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"19","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2007-12-12","PERANCANGAN_INTERVENSI":""},{"BIL":"120","KOD_SEKOLAH":"YEA3302","NAMA_SEKOLAH":"SEKOLAH MENENGAH KEBANGSAAN KANOWIT","NAMA_MBPK":"NATHANIEL KONG ZE TENG","NO_OKU":"LD131520000112","KATEGORI_KETIDAKUPAYAAN":"PEMBELAJARAN","JANTINA":"L","UMUR":"15","PROGRAM_KATEGORI":"SEPARA","ALIRAN_KELAS":"KHAS","JUSTIFIKASI_TIDAK_DIINKLUSIFKAN":"","CATATAN":"KHAM | T.Lahir: 2011-05-13","PERANCANGAN_INTERVENSI":""}];
+
+    const STORAGE_KEY_PPKI = 'PORTAL_MBPK_PPI_PPKI_V3';
+    const STORAGE_KEY_SEPARA = 'PORTAL_MBPK_PPI_SEPARA_V3';
+
+    let currentPPKI = [];
+    let currentSepara = [];
+    let currentFilterStatus = 'ALL';
+
+    // Safe storage reader that never crashes and never returns empty array if master data exists
+    function loadSafeData() {
+      // 1. Always start with a fresh clone of MASTER_PPKI_DATA
+      currentPPKI = JSON.parse(JSON.stringify(MASTER_PPKI_DATA));
+      currentSepara = JSON.parse(JSON.stringify(MASTER_SEPARA_DATA));
+
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const s1 = localStorage.getItem(STORAGE_KEY_PPKI);
+          if (s1) {
+            const p1 = JSON.parse(s1);
+            if (Array.isArray(p1) && p1.length > 0) {
+              currentPPKI = p1;
+            }
+          }
+          const s2 = localStorage.getItem(STORAGE_KEY_SEPARA);
+          if (s2) {
+            const p2 = JSON.parse(s2);
+            if (Array.isArray(p2) && p2.length > 0) {
+              currentSepara = p2;
+            }
+          }
+        }
+      } catch(e) {
+        console.warn('Storage read error, using in-memory master data', e);
+      }
+
+      // Ensure STATUS_PERSEKOLAHAN field
+      currentPPKI.forEach(item => {
+        if (!item.STATUS_PERSEKOLAHAN) item.STATUS_PERSEKOLAHAN = 'AKTIF';
+      });
+    }
+
+    function savePPKIToStorage() {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem(STORAGE_KEY_PPKI, JSON.stringify(currentPPKI));
+        }
+      } catch(e) {
+        console.warn('Storage write error', e);
+      }
+    }
+
+    function saveSeparaToStorage() {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem(STORAGE_KEY_SEPARA, JSON.stringify(currentSepara));
+        }
+      } catch(e) {
+        console.warn('Storage write error', e);
+      }
+      updateCardsAndFilters();
+    }
+
+    function resetDataToDefault() {
+      if (confirm('Adakah anda pasti ingin memuat semula semua data kepada data asal? Segala perubahan yang disimpan secara setempat akan ditetapkan semula.')) {
+        try {
+          localStorage.removeItem(STORAGE_KEY_PPKI);
+          localStorage.removeItem(STORAGE_KEY_SEPARA);
+        } catch(e) {}
+        loadSafeData();
+        setStatusFilter('ALL');
+        updateCardsAndFilters();
+        applyFilters();
+        showToast('Data telah ditetapkan semula kepada asal.');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // UPDATE CARDS & FILTERS - SEGERAK SECARA PENUH MENGIKUT PILIHAN SEKOLAH (AUDIT POINT 2)
+    function updateCardsAndFilters() {
+      const selectedSchool = document.getElementById('schoolSelect').value;
+      
+      let schoolPPKI = currentPPKI;
+      let schoolSepara = currentSepara;
+      let schoolLabel = 'Semua Sekolah';
+
+      if (selectedSchool !== 'ALL') {
+        schoolPPKI = currentPPKI.filter(i => i.KOD_SEKOLAH === selectedSchool);
+        schoolSepara = currentSepara.filter(i => i.KOD_SEKOLAH === selectedSchool);
+        const sel = document.getElementById('schoolSelect');
+        schoolLabel = sel.options[sel.selectedIndex].text.split('(')[0].trim();
+      }
+
+      // Active students
+      const activeList = schoolPPKI.filter(s => s.STATUS_PERSEKOLAHAN === 'AKTIF' || !s.STATUS_PERSEKOLAHAN);
+      const totalActive = activeList.length;
+      const completedList = activeList.filter(s => s.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN && s.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN.trim() !== '');
+      const completedCount = completedList.length;
+      const pendingCount = totalActive - completedCount;
+      const pct = totalActive > 0 ? Math.round((completedCount / totalActive) * 100) : 0;
+      const pindahCount = schoolPPKI.filter(s => s.STATUS_PERSEKOLAHAN && s.STATUS_PERSEKOLAHAN !== 'AKTIF').length;
+
+      // 1. Kemaskini 4 Kad Utama di Atas (Imej 2)
+      document.getElementById('statTotal').innerText = totalActive;
+      document.getElementById('statTotalSubtitle').innerText = selectedSchool === 'ALL' ? 'Semua Sekolah' : schoolLabel;
+
+      document.getElementById('statCompleted').innerText = completedCount;
+      document.getElementById('statCompletedPct').innerText = pct + '% Selesai (' + completedCount + '/' + totalActive + ')';
+
+      document.getElementById('statPending').innerText = pendingCount;
+      document.getElementById('statPendingSubtitle').innerText = pendingCount === 0 ? '✓ Lengkap / Selesai' : 'Tindakan Guru';
+
+      document.getElementById('statSepara').innerText = schoolSepara.length;
+      document.getElementById('statSeparaSubtitle').innerText = selectedSchool === 'ALL' ? 'Sedia Ada PPI (Arkib)' : 'Inklusif Separa (' + schoolLabel + ')';
+      document.getElementById('separaBadgeCount').innerText = currentSepara.length;
+      document.getElementById('separaModalCount').innerText = currentSepara.length;
+
+      // 2. Kemaskini Bilangan pada Butang Filter
+      document.getElementById('countFilterAll').innerText = schoolPPKI.length;
+      document.getElementById('countFilterDone').innerText = completedCount;
+      document.getElementById('countFilterPending').innerText = pendingCount;
+      document.getElementById('countFilterPindah').innerText = pindahCount;
+
+      // 3. Kemaskini Bar Kemajuan Sekolah
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressPctText').innerText = pct + '% (' + completedCount + '/' + totalActive + ')';
+      document.getElementById('progressTitleLabel').innerText = selectedSchool === 'ALL' ? 'Peratus Kesiapan Daerah' : 'Kesiapan ' + schoolLabel;
+    }
+
+    function setStatusFilter(status) {
+      currentFilterStatus = status;
+      ['All', 'Pending', 'Done', 'Pindah'].forEach(s => {
+        const btn = document.getElementById('filterBtn' + s);
+        if (s.toUpperCase() === status) {
+          btn.className = "px-3 py-1.5 font-bold rounded-lg bg-white text-slate-800 shadow-sm transition";
+        } else {
+          btn.className = "px-3 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+        }
+      });
+      applyFilters();
+    }
+
+    // Apabila sekolah bertukar: kemaskini kad, reset status filter ke 'ALL' supaya senarai murid muncul serta merta!
+    function onSchoolChange() {
+      const sel = document.getElementById('schoolSelect');
+      const badge = document.getElementById('activeSchoolBadge');
+      if (sel.value === 'ALL') {
+        badge.innerText = 'Semua Sekolah';
+      } else {
+        badge.innerText = sel.options[sel.selectedIndex].text.split('(')[0].trim();
+      }
+      
+      // Auto-reset ke tab 'ALL' setiap kali tukar sekolah supaya murid sentiasa kelihatan
+      currentFilterStatus = 'ALL';
+      ['All', 'Pending', 'Done', 'Pindah'].forEach(s => {
+        const btn = document.getElementById('filterBtn' + s);
+        if (s.toUpperCase() === 'ALL') {
+          btn.className = "px-3 py-1.5 font-bold rounded-lg bg-white text-slate-800 shadow-sm transition";
+        } else {
+          btn.className = "px-3 py-1.5 font-medium rounded-lg text-slate-600 hover:text-slate-900 transition";
+        }
+      });
+
+      updateCardsAndFilters();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const selectedSchool = document.getElementById('schoolSelect').value;
+      const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+
+      let filtered = currentPPKI.filter(item => {
+        // School filter
+        if (selectedSchool !== 'ALL' && item.KOD_SEKOLAH !== selectedSchool) return false;
+
+        // Status filter
+        const isAktif = (item.STATUS_PERSEKOLAHAN === 'AKTIF' || !item.STATUS_PERSEKOLAHAN);
+        const hasJustifikasi = item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN && item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN.trim() !== '';
+
+        if (currentFilterStatus === 'PINDAH') {
+          if (isAktif) return false;
+        } else if (currentFilterStatus === 'DONE') {
+          if (!isAktif || !hasJustifikasi) return false;
+        } else if (currentFilterStatus === 'PENDING') {
+          if (!isAktif || hasJustifikasi) return false;
+        }
+
+        // Search match
+        if (searchQuery) {
+          const matchName = (item.NAMA_MBPK || '').toLowerCase().includes(searchQuery);
+          const matchNoOku = (item.NO_OKU || '').toLowerCase().includes(searchQuery);
+          if (!matchName && !matchNoOku) return false;
+        }
+
+        return true;
+      });
+
+      renderTable(filtered);
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('studentTableBody');
+      const emptyState = document.getElementById('emptyState');
+      const emptyTitle = document.getElementById('emptyTitle');
+      const emptyDesc = document.getElementById('emptyDesc');
+      const selectedSchool = document.getElementById('schoolSelect').value;
+
+      document.getElementById('showingCount').innerText = 'Memaparkan ' + data.length + ' rekod';
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.classList.remove('hidden');
+
+        if (currentFilterStatus === 'PENDING') {
+          emptyTitle.innerText = 'Tahniah! Tiada MBPK Belum Diisi.';
+          emptyDesc.innerText = 'Semua murid aktif di sekolah ini telah pun mempunyai justifikasi.';
+        } else if (currentFilterStatus === 'PINDAH') {
+          emptyTitle.innerText = 'Tiada Murid Berpindah / Berhenti.';
+          emptyDesc.innerText = 'Semua rekod murid sekolah ini masih berstatus aktif.';
+        } else {
+          emptyTitle.innerText = 'Tiada Rekod Dijumpai.';
+          emptyDesc.innerText = 'Tiada murid yang sepadan dengan tapisan carian.';
+        }
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      let html = '';
+
+      data.forEach((item, index) => {
+        const isAktif = (item.STATUS_PERSEKOLAHAN === 'AKTIF' || !item.STATUS_PERSEKOLAHAN);
+        const hasJustifikasi = item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN && item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN.trim() !== '';
+
+        let badge = '';
+        if (!isAktif) {
+          badge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold badge-inactive">&#10006; ` + item.STATUS_PERSEKOLAHAN + `</span>`;
+        } else if (hasJustifikasi) {
+          badge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold badge-done">&#10003; ` + item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN + `</span>`;
+        } else {
+          badge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold badge-pending animate-pulse">&#9888; Belum Diisi</span>`;
+        }
+
+        const intervensiText = item.PERANCANGAN_INTERVENSI && item.PERANCANGAN_INTERVENSI.trim() !== ''
+          ? `<span class="font-medium text-slate-800">` + item.PERANCANGAN_INTERVENSI + `</span>`
+          : `<span class="text-slate-400 italic">Tiada perancangan</span>`;
+
+        // Butang Tindakan yang Terang dan Jelas
+        const actionBtnClass = hasJustifikasi 
+          ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+          : "bg-blue-600 hover:bg-blue-700 text-white shadow-md animate-bounce";
+        const actionBtnText = hasJustifikasi ? "Kemaskini" : "Isi Justifikasi";
+
+        html += `
+          <tr class="hover:bg-blue-50/50 transition">
+            <td class="py-3 px-3 text-center font-bold text-slate-400">` + (index + 1) + `</td>
+            <td class="py-3 px-4">
+              <div class="font-bold text-slate-900 text-xs sm:text-sm">` + item.NAMA_MBPK + `</div>
+              <div class="text-xs font-mono text-blue-700 font-bold mt-0.5">` + item.NO_OKU + `</div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-semibold text-slate-800 text-xs">` + item.NAMA_SEKOLAH + `</div>
+              <div class="text-xs text-slate-500 font-mono">` + item.KOD_SEKOLAH + `</div>
+            </td>
+            <td class="py-3 px-3">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-700">` + item.KATEGORI_KETIDAKUPAYAAN + `</span>
+              <div class="text-xs text-slate-500 mt-1">Umur: <strong>` + item.UMUR + `</strong> thn (` + item.JANTINA + `)</div>
+            </td>
+            <td class="py-3 px-3">` + badge + `</td>
+            <td class="py-3 px-3">` + intervensiText + `</td>
+            <td class="py-3 px-3 text-center">
+              <div class="inline-flex items-center gap-1.5 justify-center">
+                <button onclick="openEditModal('` + item.BIL + `')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm transition ` + actionBtnClass + `">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                  <span>` + actionBtnText + `</span>
+                </button>
+                <button onclick="quickDeleteStudent('` + item.BIL + `')" title="Padam / Berpindah" class="p-1.5 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white rounded-lg border border-rose-200 transition">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function openEditModal(bil) {
+      const student = currentPPKI.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      document.getElementById('editBil').value = student.BIL;
+      document.getElementById('modalNama').innerText = student.NAMA_MBPK;
+      document.getElementById('modalNoOku').innerText = student.NO_OKU;
+      document.getElementById('modalSekolah').innerText = student.NAMA_SEKOLAH;
+      document.getElementById('modalUmur').innerText = student.UMUR;
+      document.getElementById('modalJantina').innerText = student.JANTINA === 'L' ? 'Lelaki' : 'Perempuan';
+
+      document.getElementById('modalStatusMurid').value = student.STATUS_PERSEKOLAHAN || 'AKTIF';
+      document.getElementById('modalJustifikasi').value = student.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN || '';
+      document.getElementById('modalIntervensi').value = student.PERANCANGAN_INTERVENSI || '';
+      document.getElementById('modalCatatan').value = student.CATATAN || '';
+
+      onStatusMuridChange();
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    function onStatusMuridChange() {
+      const status = document.getElementById('modalStatusMurid').value;
+      const justContainer = document.getElementById('justifikasiContainer');
+      const intervContainer = document.getElementById('intervensiContainer');
+      const justSelect = document.getElementById('modalJustifikasi');
+      const intervInput = document.getElementById('modalIntervensi');
+
+      if (status !== 'AKTIF') {
+        justContainer.classList.add('opacity-40');
+        intervContainer.classList.add('opacity-40');
+        justSelect.removeAttribute('required');
+        intervInput.removeAttribute('required');
+      } else {
+        justContainer.classList.remove('opacity-40');
+        intervContainer.classList.remove('opacity-40');
+        justSelect.setAttribute('required', 'true');
+        intervInput.setAttribute('required', 'true');
+      }
+    }
+
+    function onJustifikasiChange() {
+      const val = document.getElementById('modalJustifikasi').value;
+      if (val === 'UMUR BELUM MELAYAKKAN') {
+        if (!document.getElementById('modalIntervensi').value) {
+          document.getElementById('modalIntervensi').value = 'RPI2.0 (Persediaan umur inklusif)';
+        }
+      } else if (val === 'TANTRUM/EMOSI/DISPLIN') {
+        if (!document.getElementById('modalIntervensi').value) {
+          document.getElementById('modalIntervensi').value = 'RPI2.0 & Modifikasi Tingkah Laku';
+        }
+      }
+    }
+
+    function onIntervensiPresetChange() {
+      const val = document.getElementById('modalIntervensiSelect').value;
+      if (val) {
+        document.getElementById('modalIntervensi').value = val;
+      }
+    }
+
+    function saveStudent(e) {
+      e.preventDefault();
+      const bil = document.getElementById('editBil').value;
+      const idx = currentPPKI.findIndex(s => String(s.BIL) === String(bil));
+      if (idx !== -1) {
+        const status = document.getElementById('modalStatusMurid').value;
+        currentPPKI[idx].STATUS_PERSEKOLAHAN = status;
+        currentPPKI[idx].JUSTIFIKASI_TIDAK_DIINKLUSIFKAN = document.getElementById('modalJustifikasi').value;
+        currentPPKI[idx].PERANCANGAN_INTERVENSI = document.getElementById('modalIntervensi').value;
+        currentPPKI[idx].CATATAN = document.getElementById('modalCatatan').value;
+
+        savePPKIToStorage();
+        closeModal();
+        updateCardsAndFilters();
+        applyFilters();
+        showToast('Rekod murid berjaya dikemas kini!');
+      }
+    }
+
+    function deleteCurrentStudent() {
+      const bil = document.getElementById('editBil').value;
+      const student = currentPPKI.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      if (confirm('Adakah anda pasti ingin memadamkan rekod ' + student.NAMA_MBPK + '? Tindakan ini akan mengeluarkan murid daripada senarai semakan.')) {
+        currentPPKI = currentPPKI.filter(s => String(s.BIL) !== String(bil));
+        savePPKIToStorage();
+        closeModal();
+        updateCardsAndFilters();
+        applyFilters();
+        showToast('Rekod berjaya dipadamkan.');
+      }
+    }
+
+    function quickDeleteStudent(bil) {
+      const student = currentPPKI.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      if (confirm('Adakah anda pasti ingin memadam atau memindahkan rekod ' + student.NAMA_MBPK + ' (No. OKU: ' + student.NO_OKU + ')?')) {
+        currentPPKI = currentPPKI.filter(s => String(s.BIL) !== String(bil));
+        savePPKIToStorage();
+        updateCardsAndFilters();
+        applyFilters();
+        showToast('Rekod ' + student.NAMA_MBPK + ' telah dipadamkan.');
+      }
+    }
+
+    function exportCSV() {
+      const headers = ['BIL', 'KOD_SEKOLAH', 'NAMA_SEKOLAH', 'NAMA_MBPK', 'NO_OKU', 'KATEGORI_KETIDAKUPAYAAN', 'JANTINA', 'UMUR', 'PROGRAM_KATEGORI', 'STATUS_PERSEKOLAHAN', 'JUSTIFIKASI_TIDAK_DIINKLUSIFKAN', 'PERANCANGAN_INTERVENSI', 'CATATAN'];
+      let csvContent = headers.join(',') + '\r\n';
+
+      currentPPKI.forEach(row => {
+        const line = headers.map(h => {
+          let val = row[h] ? String(row[h]).replace(/"/g, '""') : '';
+          return '"' + val + '"';
+        }).join(',');
+        csvContent += line + '\r\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'SEMAKAN_MBPK_PPI_TERKINI_' + new Date().toISOString().slice(0,10) + '.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // ARKIB SEPARA FUNCTIONS (Audit Point 2)
+    function openSeparaModal() {
+      renderSeparaTable();
+      document.getElementById('separaModal').classList.remove('hidden');
+    }
+
+    function closeSeparaModal() {
+      document.getElementById('separaModal').classList.add('hidden');
+    }
+
+    function renderSeparaTable() {
+      const query = (document.getElementById('separaSearch').value || '').toLowerCase().trim();
+      const tbody = document.getElementById('separaTableBody');
+      const filtered = currentSepara.filter(item => {
+        if (!query) return true;
+        return (item.NAMA_MBPK || '').toLowerCase().includes(query) || 
+               (item.NO_OKU || '').toLowerCase().includes(query) ||
+               (item.NAMA_SEKOLAH || '').toLowerCase().includes(query);
+      });
+
+      let html = '';
+      filtered.forEach((item, index) => {
+        const statusText = item.STATUS_PERSEKOLAHAN || 'SEPARA';
+        html += `
+          <tr class="hover:bg-slate-50">
+            <td class="py-2.5 px-3 text-slate-400 font-bold">` + (index + 1) + `</td>
+            <td class="py-2.5 px-3">
+              <div class="font-semibold text-slate-800">` + item.NAMA_MBPK + `</div>
+              <div class="font-mono text-xs text-blue-700">` + item.NO_OKU + `</div>
+            </td>
+            <td class="py-2.5 px-3">
+              <div class="text-slate-700 font-medium">` + item.NAMA_SEKOLAH + `</div>
+              <div class="text-xs text-slate-400">` + item.UMUR + ` thn (` + item.JANTINA + `)</div>
+            </td>
+            <td class="py-2.5 px-3">
+              <span class="px-2 py-0.5 rounded text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">` + statusText + `</span>
+              ` + (item.CATATAN ? `<div class="text-xs text-slate-500 mt-0.5">` + item.CATATAN + `</div>` : '') + `
+            </td>
+            <td class="py-2.5 px-3 text-center">
+              <div class="inline-flex items-center gap-1.5">
+                <button onclick="openEditSeparaModal('` + item.BIL + `')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md font-semibold text-xs border border-slate-300">
+                  Edit
+                </button>
+                <button onclick="deleteSeparaDirect('` + item.BIL + `')" title="Padam Rekod" class="p-1 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white rounded-md border border-rose-200">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function openEditSeparaModal(bil) {
+      const student = currentSepara.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      document.getElementById('editSeparaBil').value = student.BIL;
+      document.getElementById('modalSeparaNama').innerText = student.NAMA_MBPK;
+      document.getElementById('modalSeparaNoOku').innerText = student.NO_OKU;
+      document.getElementById('modalSeparaStatus').value = student.STATUS_PERSEKOLAHAN || 'SEPARA';
+      document.getElementById('modalSeparaCatatan').value = student.CATATAN || '';
+
+      document.getElementById('editSeparaModal').classList.remove('hidden');
+    }
+
+    function closeEditSeparaModal() {
+      document.getElementById('editSeparaModal').classList.add('hidden');
+    }
+
+    function saveSeparaStudent(e) {
+      e.preventDefault();
+      const bil = document.getElementById('editSeparaBil').value;
+      const idx = currentSepara.findIndex(s => String(s.BIL) === String(bil));
+      if (idx !== -1) {
+        currentSepara[idx].STATUS_PERSEKOLAHAN = document.getElementById('modalSeparaStatus').value;
+        currentSepara[idx].CATATAN = document.getElementById('modalSeparaCatatan').value;
+        saveSeparaToStorage();
+        closeEditSeparaModal();
+        renderSeparaTable();
+        showToast('Rekod arkib berjaya dikemas kini!');
+      }
+    }
+
+    function deleteSeparaStudent() {
+      const bil = document.getElementById('editSeparaBil').value;
+      const student = currentSepara.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      if (confirm('Adakah anda pasti ingin memadamkan rekod ' + student.NAMA_MBPK + ' dari arkib?')) {
+        currentSepara = currentSepara.filter(s => String(s.BIL) !== String(bil));
+        saveSeparaToStorage();
+        closeEditSeparaModal();
+        renderSeparaTable();
+        showToast('Rekod berjaya dipadam dari arkib.');
+      }
+    }
+
+    function deleteSeparaDirect(bil) {
+      const student = currentSepara.find(s => String(s.BIL) === String(bil));
+      if (!student) return;
+
+      if (confirm('Padam rekod ' + student.NAMA_MBPK + ' dari arkib?')) {
+        currentSepara = currentSepara.filter(s => String(s.BIL) !== String(bil));
+        saveSeparaToStorage();
+        renderSeparaTable();
+        showToast('Rekod telah dipadamkan.');
+      }
+    }
+
+    // Pemulaan portal secara langsung dan selamat
+    loadSafeData();
+    updateCardsAndFilters();
+    applyFilters();
+  </script>
+</body>
+</html>
