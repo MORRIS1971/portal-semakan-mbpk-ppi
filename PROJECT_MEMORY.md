@@ -10,7 +10,7 @@ Dokumen memori ini merekodkan semua spesifikasi, senibina data, logik sistem, da
 * **Pautan Laman Web Rasmi (Live URL):** https://morris1971.github.io/portal-semakan-mbpk-ppi/
 * **Pautan GitHub Repository:** https://github.com/MORRIS1971/portal-semakan-mbpk-ppi.git
 * **Lokasi Tempatan Projek:** `C:\Users\morris.jitai\Desktop\PORTAL-SEMAKAN-MBPK-PPI`
-* **Fail Utama:** `index.html`, `data_mbpk_ppki_tindakan_guru.csv`, `data_mbpk_separa_arkib.csv`
+* **Fail Utama:** `index.html`, `data_mbpk_ppki_tindakan_guru.csv`, `data_mbpk_separa_arkib.csv`, `PROJECT_MEMORY.md`, `README.md`
 
 ---
 
@@ -19,7 +19,7 @@ Dokumen memori ini merekodkan semua spesifikasi, senibina data, logik sistem, da
    * Semua fail siap pengekodan **MESTI disalin/diserahkan terus ke Desktop pengguna** pada laluan:
      `C:\Users\morris.jitai\Desktop\PORTAL-SEMAKAN-MBPK-PPI`.
 2. **Aliran Kemas Kini Auto-Sync (CI/CD):**
-   * Setiap kali penambahbaikan dibuat di chat:
+   * Setiap kali penambahbaikan dibuat:
      1. Kod dikemas kini pada Desktop.
      2. Lakukan `git add`, `git commit` dan `git push origin main`.
      3. GitHub Pages akan membina (*auto-deploy*) versi terkini dalam masa 30–60 saat.
@@ -66,10 +66,33 @@ Dokumen memori ini merekodkan semua spesifikasi, senibina data, logik sistem, da
    * Guru boleh menukar status murid: `AKTIF BERSEKOLAH`, `BERPINDAH SEKOLAH`, `BERHENTI / TIDAK BERSEKOLAH`, `TAMAT PERSEKOLAHAN`.
    * Murid yang berpindah/berhenti diasingkan ke tab *Berpindah/Berhenti* supaya tidak mencacatkan peratus kesiapan sekolah.
    * Disediakan butang padam rekod pada jadual dan modal (lengkap dengan *confirmation prompt*).
-5. **Pengurusan Arkib Separa:**
+5. **Fungsi Tambah MBPK Baharu (Pendaftaran Terkini):**
+   * Butang hijau zamrud **"+ Tambah MBPK"** diletakkan di bar atas bersebelahan "Arkib Murid Separa".
+   * Modal pendaftaran lengkap merangkumi semua atribut standard:
+     * Sekolah (Dropdown automatik mengikut senarai 6 sekolah atau pra-pilih sekolah aktif)
+     * Nama Penuh Murid
+     * No. KP / No. MyKid
+     * No. Kad OKU / JKM
+     * Kategori Ketidakupayaan (Pembelajaran, Penglihatan, Pendengaran, Fizikal, Pertuturan, Pelbagai)
+     * Tahap Persekolahan / Kelas
+     * Jantina & Bangsa
+     * Status Keberadaan Murid
+   * Rekod baharu secara automatik diserap ke senarai semakan PPKI, dikemaskini dalam kad KPI, dan dimuat turun bersama dalam fail CSV.
+6. **Pengurusan Arkib Separa:**
    * Modal khas untuk menyemak 68 murid sedia ada PPI Separa.
    * Menyokong kemas kini status perpindahan atau padam rekod.
-6. **Eksport CSV Terkini:**
+7. **Eksport CSV Terkini:**
    * Muat turun laporan CSV lengkap dengan satu klik untuk pelaporan Unit Pendidikan Khas (UPK) ke PPD / JPN.
-7. **Penyimpanan Selamat (*Safe Storage*):**
-   * Menggunakan mod sandaran memori master data agar sistem tidak sesekali ranap (*crash*) walaupun pelayar menyekat *localStorage*.
+8. **Penyimpanan Selamat (*Safe Storage*):**
+   * Menggunakan mod sandaran memori master data dan diselaraskan ke `localStorage` agar data guru tersimpan rapi tanpa risiko ranap (*crash*).
+
+---
+
+## 5. Panduan Tetapan GitHub Repository & GitHub Pages
+* **Alamat Laman Web (Website):** `https://morris1971.github.io/portal-semakan-mbpk-ppi/`
+* **Keterangan Repositori (Description):** `Portal Semakan Penyertaan Murid Berkeperluan Pendidikan Khas (MBPK) ke Program Pendidikan Inklusif (PPI)`
+* **Tetapan GitHub Pages:**
+  1. Pergi ke tab **Settings** > **Pages**
+  2. Source: **Deploy from a branch**
+  3. Branch: **main** / folder: `/(root)`
+  4. Tekan **Save**.
