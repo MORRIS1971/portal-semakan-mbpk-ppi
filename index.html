@@ -32,19 +32,24 @@
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
+          <!-- Butang Tambah MBPK Baharu di Header -->
+          <button onclick="openAddModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-md transition transform hover:-translate-y-0.5">
+            <svg class="w-4 h-4 text-emerald-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+            <span>Tambah MBPK</span>
+          </button>
           <button onclick="openSeparaModal()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-600 transition shadow-sm">
             <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
             <span>Arkib Separa (<span id="separaBadgeCount">68</span>)</span>
           </button>
-          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow-sm transition">
+          <button onclick="exportCSV()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-700 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-sm transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            <span>Eksport CSV Terkini</span>
+            <span>Eksport CSV</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- 4 KAD UTAMA (SEGERAK DENGAN SEKOLAH DIPILIH - KEPERLUAN AUDIT 2) -->
+    <!-- 4 KAD UTAMA (SEGERAK DENGAN SEKOLAH DIPILIH) -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
       <!-- Kad 1: Jumlah MBPK Disemak -->
       <div class="bg-white p-3.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
@@ -153,12 +158,18 @@
 
     <!-- Table of Students -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-      <div class="px-4 sm:px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/75">
+      <div class="px-4 sm:px-5 py-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 bg-slate-50/75">
         <div class="flex items-center gap-2">
           <h2 class="font-bold text-slate-800 text-xs uppercase tracking-wider">Senarai MBPK Yang Perlu Disemak</h2>
           <span class="text-xs bg-blue-100 text-blue-800 font-bold px-2.5 py-0.5 rounded-md" id="activeSchoolBadge">Semua Sekolah</span>
         </div>
-        <span class="text-xs text-slate-500 font-medium" id="showingCount">Memaparkan 53 rekod</span>
+        <div class="flex items-center gap-2.5">
+          <button onclick="openAddModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-xs shadow-sm transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+            <span>Tambah MBPK</span>
+          </button>
+          <span class="text-xs text-slate-500 font-medium" id="showingCount">Memaparkan 53 rekod</span>
+        </div>
       </div>
 
       <div class="overflow-x-auto">
@@ -187,9 +198,15 @@
         </div>
         <h3 class="text-xs font-bold text-slate-800" id="emptyTitle">Tiada Rekod Dijumpai</h3>
         <p class="text-xs text-slate-500 mt-0.5" id="emptyDesc">Tiada murid dalam kategori tapisan ini.</p>
-        <button onclick="setStatusFilter('ALL')" id="emptyResetBtn" class="mt-3 px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm transition">
-          Lihat Semua Murid Sekolah Ini
-        </button>
+        <div class="mt-3 flex items-center justify-center gap-2">
+          <button onclick="setStatusFilter('ALL')" id="emptyResetBtn" class="px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold hover:bg-blue-700 shadow-sm transition">
+            Lihat Semua Murid Sekolah Ini
+          </button>
+          <button onclick="openAddModal()" class="px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-bold hover:bg-emerald-700 shadow-sm transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>Daftar MBPK Baharu</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -201,6 +218,131 @@
       </button>
     </div>
 
+  </div>
+
+  <!-- MODAL TAMBAH MBPK BAHARU -->
+  <div id="addModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] shadow-2xl border border-slate-200 overflow-hidden flex flex-col animate-in fade-in zoom-in duration-150">
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white px-5 py-3.5 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center text-amber-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold">Pendaftaran MBPK Baharu (PPKI)</h3>
+            <p class="text-xs text-emerald-200">Daftar maklumat murid yang baru menyertai program</p>
+          </div>
+        </div>
+        <button onclick="closeAddModal()" class="text-slate-300 hover:text-white text-xl font-bold leading-none">&times;</button>
+      </div>
+
+      <form id="addForm" onsubmit="saveNewStudent(event)" class="p-5 space-y-3.5 text-xs overflow-y-auto flex-1">
+        <!-- Pilihan Sekolah -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">
+            SEKOLAH PENDAFTARAN <span class="text-rose-500">*</span>
+          </label>
+          <select id="addKodSekolah" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:bg-white">
+            <option value="">-- Pilih Sekolah --</option>
+            <option value="YBB3311">SK NANGA NGUNGUN (YBB3311)</option>
+            <option value="YBB3323">SK NANGA PEDAI (YBB3323)</option>
+            <option value="YCB3301">SK ST FRANCIS XAVIER (YCB3301)</option>
+            <option value="YBB3320">SK ULU RANAN (YBB3320)</option>
+            <option value="YEB3301">SMK DATUK HAJI ABDUL RAHMAN YAKUB (YEB3301)</option>
+            <option value="YEA3302">SMK KANOWIT (YEA3302)</option>
+          </select>
+        </div>
+
+        <!-- Nama Murid & No OKU -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">
+              NAMA PENUH MBPK <span class="text-rose-500">*</span>
+            </label>
+            <input type="text" id="addNamaMbpk" required placeholder="Contoh: MOHD ADAM BIN ALI" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 uppercase">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">
+              NO. PENDAFTARAN OKU <span class="text-rose-500">*</span>
+            </label>
+            <input type="text" id="addNoOku" required placeholder="Contoh: LD131526000099" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 uppercase font-mono">
+          </div>
+        </div>
+
+        <!-- Kategori Ketidakupayaan, Jantina, Umur, Aliran Kelas -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">KATEGORI <span class="text-rose-500">*</span></label>
+            <select id="addKategori" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+              <option value="PEMBELAJARAN">PEMBELAJARAN</option>
+              <option value="FIZIKAL">FIZIKAL</option>
+              <option value="PENGLIHATAN">PENGLIHATAN</option>
+              <option value="PENDENGARAN">PENDENGARAN</option>
+              <option value="PELBAGAI">PELBAGAI</option>
+              <option value="PERTUTURAN">PERTUTURAN</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">JANTINA <span class="text-rose-500">*</span></label>
+            <select id="addJantina" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+              <option value="L">Lelaki (L)</option>
+              <option value="P">Perempuan (P)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">UMUR <span class="text-rose-500">*</span></label>
+            <input type="number" id="addUmur" min="5" max="25" required placeholder="Tahun" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">ALIRAN KELAS</label>
+            <select id="addAliranKelas" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-semibold">
+              <option value="KHAS">KHAS</option>
+              <option value="INTEGRASI">INTEGRASI</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Justifikasi Utama (Boleh kosongkan jika belum ada justifikasi) -->
+        <div class="pt-2 border-t border-slate-100">
+          <label class="block font-bold text-slate-700 mb-1">
+            JUSTIFIKASI TIDAK DIINKLUSIFKAN (PILIHAN):
+          </label>
+          <select id="addJustifikasi" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold">
+            <option value="">-- Belum Ada Justifikasi (Tindakan Kemudian) --</option>
+            <option value="UMUR BELUM MELAYAKKAN">1. UMUR BELUM MELAYAKKAN</option>
+            <option value="TANTRUM/EMOSI/DISPLIN">2. TANTRUM / EMOSI / DISIPLIN</option>
+            <option value="KETIDAKUPAYAAN FIZIKAL">3. KETIDAKUPAYAAN FIZIKAL</option>
+            <option value="PENGURUSAN DIRI BELUM DIKUASAI">4. PENGURUSAN DIRI BELUM DIKUASAI (TOILET/KEBERSIHAN)</option>
+            <option value="TAHAP KOGNITIF/3M BELUM BERSEDIA">5. TAHAP KOGNITIF / 3M BELUM BERSEDIA</option>
+            <option value="GANGGUAN SENSORI / HIPERAKTIF">6. GANGGUAN SENSORI / HIPERAKTIF TINGGI</option>
+            <option value="KOMUNIKASI & PERTUTURAN TERHAD">7. MASALAH KOMUNIKASI & PERTUTURAN TERHAD</option>
+            <option value="LAIN-LAIN SEBAB">8. LAIN-LAIN SEBAB</option>
+          </select>
+        </div>
+
+        <!-- Perancangan Intervensi -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">PERANCANGAN INTERVENSI SEKOLAH:</label>
+          <input type="text" id="addIntervensi" placeholder="Contoh: RPI 2.0 (atau kosongkan)" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs font-semibold">
+        </div>
+
+        <!-- Catatan -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">CATATAN (PILIHAN):</label>
+          <input type="text" id="addCatatan" placeholder="Catatan tarikh daftar baru, dll..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 flex-shrink-0">
+          <button type="button" onclick="closeAddModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>Daftar MBPK</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- Modal Edit / Kemaskini Justifikasi & Status Murid PPKI -->
@@ -397,9 +539,17 @@
     let currentSepara = [];
     let currentFilterStatus = 'ALL';
 
+    const SCHOOL_NAMES = {
+      'YBB3311': 'SEKOLAH KEBANGSAAN NANGA NGUNGUN',
+      'YBB3323': 'SEKOLAH KEBANGSAAN NANGA PEDAI',
+      'YCB3301': 'SEKOLAH KEBANGSAAN ST FRANCIS XAVIER',
+      'YBB3320': 'SEKOLAH KEBANGSAAN ULU RANAN',
+      'YEB3301': 'SEKOLAH MENENGAH KEBANGSAAN DATUK HAJI ABDUL RAHMAN YAKUB',
+      'YEA3302': 'SEKOLAH MENENGAH KEBANGSAAN KANOWIT'
+    };
+
     // Safe storage reader that never crashes and never returns empty array if master data exists
     function loadSafeData() {
-      // 1. Always start with a fresh clone of MASTER_PPKI_DATA
       currentPPKI = JSON.parse(JSON.stringify(MASTER_PPKI_DATA));
       currentSepara = JSON.parse(JSON.stringify(MASTER_SEPARA_DATA));
 
@@ -424,7 +574,6 @@
         console.warn('Storage read error, using in-memory master data', e);
       }
 
-      // Ensure STATUS_PERSEKOLAHAN field
       currentPPKI.forEach(item => {
         if (!item.STATUS_PERSEKOLAHAN) item.STATUS_PERSEKOLAHAN = 'AKTIF';
       });
@@ -474,7 +623,7 @@
       }, 2500);
     }
 
-    // UPDATE CARDS & FILTERS - SEGERAK SECARA PENUH MENGIKUT PILIHAN SEKOLAH (AUDIT POINT 2)
+    // UPDATE CARDS & FILTERS - SEGERAK MENGIKUT PILIHAN SEKOLAH
     function updateCardsAndFilters() {
       const selectedSchool = document.getElementById('schoolSelect').value;
       
@@ -489,7 +638,6 @@
         schoolLabel = sel.options[sel.selectedIndex].text.split('(')[0].trim();
       }
 
-      // Active students
       const activeList = schoolPPKI.filter(s => s.STATUS_PERSEKOLAHAN === 'AKTIF' || !s.STATUS_PERSEKOLAHAN);
       const totalActive = activeList.length;
       const completedList = activeList.filter(s => s.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN && s.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN.trim() !== '');
@@ -498,7 +646,7 @@
       const pct = totalActive > 0 ? Math.round((completedCount / totalActive) * 100) : 0;
       const pindahCount = schoolPPKI.filter(s => s.STATUS_PERSEKOLAHAN && s.STATUS_PERSEKOLAHAN !== 'AKTIF').length;
 
-      // 1. Kemaskini 4 Kad Utama di Atas (Imej 2)
+      // 1. Kemaskini 4 Kad Utama di Atas
       document.getElementById('statTotal').innerText = totalActive;
       document.getElementById('statTotalSubtitle').innerText = selectedSchool === 'ALL' ? 'Semua Sekolah' : schoolLabel;
 
@@ -538,7 +686,6 @@
       applyFilters();
     }
 
-    // Apabila sekolah bertukar: kemaskini kad, reset status filter ke 'ALL' supaya senarai murid muncul serta merta!
     function onSchoolChange() {
       const sel = document.getElementById('schoolSelect');
       const badge = document.getElementById('activeSchoolBadge');
@@ -548,7 +695,6 @@
         badge.innerText = sel.options[sel.selectedIndex].text.split('(')[0].trim();
       }
       
-      // Auto-reset ke tab 'ALL' setiap kali tukar sekolah supaya murid sentiasa kelihatan
       currentFilterStatus = 'ALL';
       ['All', 'Pending', 'Done', 'Pindah'].forEach(s => {
         const btn = document.getElementById('filterBtn' + s);
@@ -568,10 +714,8 @@
       const searchQuery = (document.getElementById('searchInput').value || '').toLowerCase().trim();
 
       let filtered = currentPPKI.filter(item => {
-        // School filter
         if (selectedSchool !== 'ALL' && item.KOD_SEKOLAH !== selectedSchool) return false;
 
-        // Status filter
         const isAktif = (item.STATUS_PERSEKOLAHAN === 'AKTIF' || !item.STATUS_PERSEKOLAHAN);
         const hasJustifikasi = item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN && item.JUSTIFIKASI_TIDAK_DIINKLUSIFKAN.trim() !== '';
 
@@ -583,7 +727,6 @@
           if (!isAktif || hasJustifikasi) return false;
         }
 
-        // Search match
         if (searchQuery) {
           const matchName = (item.NAMA_MBPK || '').toLowerCase().includes(searchQuery);
           const matchNoOku = (item.NO_OKU || '').toLowerCase().includes(searchQuery);
@@ -601,7 +744,6 @@
       const emptyState = document.getElementById('emptyState');
       const emptyTitle = document.getElementById('emptyTitle');
       const emptyDesc = document.getElementById('emptyDesc');
-      const selectedSchool = document.getElementById('schoolSelect').value;
 
       document.getElementById('showingCount').innerText = 'Memaparkan ' + data.length + ' rekod';
 
@@ -642,10 +784,9 @@
           ? `<span class="font-medium text-slate-800">` + item.PERANCANGAN_INTERVENSI + `</span>`
           : `<span class="text-slate-400 italic">Tiada perancangan</span>`;
 
-        // Butang Tindakan yang Terang dan Jelas
         const actionBtnClass = hasJustifikasi 
           ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
-          : "bg-blue-600 hover:bg-blue-700 text-white shadow-md animate-bounce";
+          : "bg-blue-600 hover:bg-blue-700 text-white shadow-md";
         const actionBtnText = hasJustifikasi ? "Kemaskini" : "Isi Justifikasi";
 
         html += `
@@ -683,6 +824,84 @@
       tbody.innerHTML = html;
     }
 
+    // MODAL TAMBAH MBPK BAHARU FUNCTIONS
+    function openAddModal() {
+      const currentSchool = document.getElementById('schoolSelect').value;
+      if (currentSchool !== 'ALL') {
+        document.getElementById('addKodSekolah').value = currentSchool;
+      } else {
+        document.getElementById('addKodSekolah').value = '';
+      }
+      document.getElementById('addNamaMbpk').value = '';
+      document.getElementById('addNoOku').value = '';
+      document.getElementById('addKategori').value = 'PEMBELAJARAN';
+      document.getElementById('addJantina').value = 'L';
+      document.getElementById('addUmur').value = '';
+      document.getElementById('addAliranKelas').value = 'KHAS';
+      document.getElementById('addJustifikasi').value = '';
+      document.getElementById('addIntervensi').value = '';
+      document.getElementById('addCatatan').value = '';
+
+      document.getElementById('addModal').classList.remove('hidden');
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').classList.add('hidden');
+    }
+
+    function saveNewStudent(e) {
+      e.preventDefault();
+      const kodSekolah = document.getElementById('addKodSekolah').value;
+      if (!kodSekolah) {
+        alert('Sila pilih sekolah pendaftaran terlebih dahulu.');
+        return;
+      }
+
+      const namaMbpk = document.getElementById('addNamaMbpk').value.toUpperCase().trim();
+      const noOku = document.getElementById('addNoOku').value.toUpperCase().trim();
+      const umur = String(document.getElementById('addUmur').value).trim();
+
+      // Semak No OKU berganda
+      const wujud = currentPPKI.find(s => s.NO_OKU.toUpperCase() === noOku);
+      if (wujud) {
+        if (!confirm(`Murid dengan No. OKU ${noOku} (${wujud.NAMA_MBPK}) sudah wujud. Teruskan pendaftaran?`)) {
+          return;
+        }
+      }
+
+      // Generate unique BIL
+      const maxBil = currentPPKI.reduce((max, s) => Math.max(max, parseInt(s.BIL) || 0), 0);
+      const newBil = String(maxBil + 1);
+
+      const newStudent = {
+        BIL: newBil,
+        KOD_SEKOLAH: kodSekolah,
+        NAMA_SEKOLAH: SCHOOL_NAMES[kodSekolah] || kodSekolah,
+        NAMA_MBPK: namaMbpk,
+        NO_OKU: noOku,
+        KATEGORI_KETIDAKUPAYAAN: document.getElementById('addKategori').value,
+        JANTINA: document.getElementById('addJantina').value,
+        UMUR: umur,
+        PROGRAM_KATEGORI: 'PROGRAM PENDIDIKAN KHAS INTEGRASI',
+        ALIRAN_KELAS: document.getElementById('addAliranKelas').value,
+        STATUS_PERSEKOLAHAN: 'AKTIF',
+        JUSTIFIKASI_TIDAK_DIINKLUSIFKAN: document.getElementById('addJustifikasi').value,
+        PERANCANGAN_INTERVENSI: document.getElementById('addIntervensi').value.trim(),
+        CATATAN: document.getElementById('addCatatan').value.trim()
+      };
+
+      currentPPKI.push(newStudent);
+      savePPKIToStorage();
+      closeAddModal();
+
+      // Tukar dropdown sekolah ke sekolah murid baru ini supaya guru dapat lihat terus
+      document.getElementById('schoolSelect').value = kodSekolah;
+      onSchoolChange();
+
+      showToast(`MBPK ${newStudent.NAMA_MBPK} berjaya didaftarkan!`);
+    }
+
+    // MODAL EDIT FUNCTIONS
     function openEditModal(bil) {
       const student = currentPPKI.find(s => String(s.BIL) === String(bil));
       if (!student) return;
@@ -816,7 +1035,7 @@
       document.body.removeChild(link);
     }
 
-    // ARKIB SEPARA FUNCTIONS (Audit Point 2)
+    // ARKIB SEPARA FUNCTIONS
     function openSeparaModal() {
       renderSeparaTable();
       document.getElementById('separaModal').classList.remove('hidden');
