@@ -1,30 +1,29 @@
 # PORTAL SEMAKAN PENYERTAAN MBPK KE PPI
 
-Portal rasmi pengemaskinian justifikasi dan perancangan intervensi bagi Murid Berkeperluan Pendidikan Khas (MBPK) yang belum diinklusifkan ke Program Pendidikan Inklusif (PPI).
+Portal pengemaskinian justifikasi dan perancangan intervensi bagi Murid Berkeperluan Pendidikan Khas (MBPK) yang belum diinklusifkan ke Program Pendidikan Inklusif (PPI).
 
-🌐 **Laman Web Rasmi (Live):**  
-👉 **[https://morris1971.github.io/portal-semakan-mbpk-ppi/](https://morris1971.github.io/portal-semakan-mbpk-ppi/)**
+🌐 **Laman Web Rasmi:**  
+[https://morris1971.github.io/portal-semakan-mbpk-ppi/](https://morris1971.github.io/portal-semakan-mbpk-ppi/)
 
----
+## Data Induk November 2026
+Jumlah keseluruhan: **155 MBPK** merangkumi:
+- **41** MBPK PPKI (senarai tindakan guru)
+- **84** MBPK PPI Separa
+- **30** MBPK PPI Penuh
 
-## 📌 Ciri-Ciri Utama
-- **Penyeragaman Dinamik Mengikut Sekolah:** 4 kad statistik dan bar kesiapan sekolah dikemas kini secara automatik apabila nama sekolah dipilih.
-- **Borang Justifikasi Standard & Intervensi:** Memudahkan guru melengkapkan maklumat mengikut pilihan piawai KPM.
-- **Pengurusan Status Murid:** Guru boleh menukar status murid jika berpindah sekolah atau berhenti, serta memadam rekod tidak berkaitan.
-- **Arkib Murid Inklusif Separa (68 Murid):** Rekod rujukan murid yang telah menyertai PPI Separa.
-- **Eksport CSV Terkini:** Memuat turun data terkini untuk pelaporan Unit Pendidikan Khas (UPK) ke PPD / JPN.
+## Fail Data
+| Fail | Kandungan |
+|---|---|
+| `index.html` | Aplikasi portal dan data terbenam bagi paparan semasa |
+| `MASTER_MBPK_PPI_KANOWIT_NOV2026.csv` | Data induk gabungan 155 MBPK |
+| `data_mbpk_ppki_tindakan_guru.csv` | 41 rekod PPKI untuk tindakan guru |
+| `data_mbpk_separa_arkib.csv` | 114 rekod arkib PPI (84 Separa + 30 Penuh) |
+| `PROJECT_MEMORY.md` | Spesifikasi, struktur data dan nota pembangunan |
 
----
+**Nota pembangunan:** Gunakan fail master sebagai rujukan jumlah keseluruhan. Gunakan fail PPKI dan arkib mengikut fungsi modul masing-masing. Kekalkan medan dan nama lajur CSV apabila membina penambahbaikan seterusnya.
 
-## 🏫 Sekolah Terlibat
-1. SK NANGA NGUNGUN (YBB3311)
-2. SK NANGA PEDAI (YBB3323)
-3. SK ST FRANCIS XAVIER (YCB3301)
-4. SK ULU RANAN (YBB3320)
-5. SMK DATUK HAJI ABDUL RAHMAN YAKUB (YEB3301)
-6. SMK KANOWIT (YEA3302)
-
----
-
-## 📖 Dokumentasi Lengkap
-Sila rujuk fail [PROJECT_MEMORY.md](./PROJECT_MEMORY.md) untuk perincian senibina data dan logik sistem.
+## Ciri Portal
+- Penapisan rekod mengikut sekolah.
+- Pengurusan justifikasi dan perancangan intervensi.
+- Pengurusan status murid dan eksport CSV.
+- Paparan arkib PPI.
